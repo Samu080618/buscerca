@@ -15,18 +15,29 @@ fun PantallaBase.pestanasPasajero(p: Pantalla, activa: String) {
     p.pestana("Salir", false) { cerrarSesion() }
 }
 
-/** Ubicación del pasajero para sugerir el paradero de abordaje (RN-303). Sin permiso usa Cogua centro. */
+/** Punto de referencia de la zona de servicio (a 350 m de Cogua centro). */
+val ZONA_SERVICIO = 5.0641 to -73.9790
+const val RADIO_ZONA_KM = 30f
+
+/**
+ * Ubicación del pasajero para sugerir el paradero de abordaje (RN-303).
+ * Sin permiso, o si el celular está fuera de la zona de servicio (por ejemplo, en la sustentación en Bogotá),
+ * usa el punto de referencia de Cogua centro para que la búsqueda tenga sentido.
+ */
 fun PantallaBase.ubicacionPasajero(): Pair<Double, Double> {
     val permiso = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     if (permiso) {
         val lm = getSystemService(LocationManager::class.java)
         try {
             for (prov in listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)) {
-                lm.getLastKnownLocation(prov)?.let { return it.latitude to it.longitude }
+                val loc = lm.getLastKnownLocation(prov) ?: continue
+                val d = FloatArray(1)
+                android.location.Location.distanceBetween(loc.latitude, loc.longitude, ZONA_SERVICIO.first, ZONA_SERVICIO.second, d)
+                return if (d[0] / 1000f <= RADIO_ZONA_KM) loc.latitude to loc.longitude else ZONA_SERVICIO
             }
         } catch (_: SecurityException) {}
     }
-    return 5.0641 to -73.9790
+    return ZONA_SERVICIO
 }
 
 /** CU-16 Guardar favorito con alias opcional (RN-310). */
