@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name=".presentacion.UIIniciarSesion" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Módulo 02: Panel del Conductor -->
+        <activity android:name=".presentacion.conductor.UIIniciarRecorrido" />
+        <activity android:name=".presentacion.conductor.UIRecorridoEnCurso" android:launchMode="singleTop" />
+        <activity android:name=".presentacion.conductor.UIReportarNovedad" android:windowSoftInputMode="adjustResize" />
+        <service
+            android:name=".presentacion.conductor.ServicioGPS"
+            android:exported="false"
+            android:foregroundServiceType="location" />
+
+        <!-- Módulo 03: Panel del Pasajero -->
+        <activity android:name=".presentacion.pasajero.UIBuscarRutas" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".presentacion.pasajero.UIMapaRuta" />
+        <activity android:name=".presentacion.pasajero.UIParadero" />
+        <activity android:name=".presentacion.pasajero.UIFavoritos" />
+    </application>
+</manifest>
