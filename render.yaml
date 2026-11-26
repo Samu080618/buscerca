@@ -17,6 +17,8 @@ services:
         generateValue: true
       - key: SIMULAR_BUSES        # mueve solos los buses de prueba para la demostración
         value: "1"
+      - key: DEMO_CODIGO          # sin servidor de correo: la app muestra el código de recuperación
+        value: "1"
       - key: TZ                   # hora de Colombia para las reglas de señal y llegada
         value: America/Bogota
       - key: PYTHON_VERSION

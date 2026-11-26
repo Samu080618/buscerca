@@ -15,6 +15,7 @@ from app.datos.conexion_bd import ConexionBD
 from app.entidades.usuario import Usuario
 
 ESQUEMA = pathlib.Path(__file__).resolve().parent.parent / "database" / "01_esquema.sql"
+MODULO01 = ESQUEMA.with_name("02_modulo01.sql")
 CLAVE = "BusCerca2026*"
 
 PARADEROS = {  # clave: (nombre, vereda, municipio, lat, lon)
@@ -52,6 +53,7 @@ def sembrar(bd: ConexionBD, hoy: datetime | None = None) -> dict:
     """Carga el esquema y los datos iniciales. Devuelve los ids creados para usarlos en las pruebas."""
     hoy = (hoy or reloj.ahora()).replace(hour=0, minute=0, second=0, microsecond=0)
     bd.ejecutar(ESQUEMA.read_text(encoding="utf-8"))
+    bd.ejecutar(MODULO01.read_text(encoding="utf-8"))
     ids = {"paradero": {}, "ruta": {}, "vehiculo": {}, "usuario": {}, "tipo": {}}
     for t in TIPOS_NOVEDAD:
         ids["tipo"][t] = bd.consultar_uno("INSERT INTO tipo_novedad (descripcion) VALUES (%s) RETURNING id_tipo_novedad", (t,))["id_tipo_novedad"]
@@ -117,6 +119,8 @@ def demo(bd: ConexionBD, ids: dict):
 if __name__ == "__main__":
     bd = ConexionBD()
     if "--si-vacia" in sys.argv and bd.consultar_uno("SELECT to_regclass('public.usuario') AS t")["t"] is not None:
+        with bd.transaccion():
+            bd.ejecutar(MODULO01.read_text(encoding="utf-8"))   # migración del Módulo 01 sobre una base existente
         print("La base ya tiene datos; no se vuelve a cargar (quite --si-vacia para reiniciarla).")
         sys.exit(0)
     with bd.transaccion():

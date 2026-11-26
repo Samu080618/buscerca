@@ -44,7 +44,12 @@ abstract class PantallaBase : Activity(), CoroutineScope by MainScope() {
             .setNegativeButton("Cancelar", null).setPositiveButton(si) { _, _ -> accion() }.show()
     }
 
+    /** HU-0105: anula el token en el servidor y borra la sesión del teléfono. */
     fun cerrarSesion() = confirmar("Cerrar sesión", "¿Quieres salir de BusCerca?", "Salir") {
-        sesion.cerrar(); irA(UIIniciarSesion::class.java, limpiar = true)
+        launch {
+            try { api.logout() } catch (_: Exception) { /* sin conexión: igual se borra la sesión local */ }
+            co.buscerca.app.presentacion.conductor.ServicioGPS.detener(this@PantallaBase)
+            sesion.cerrar(); irA(UIIniciarSesion::class.java, limpiar = true)
+        }
     }
 }

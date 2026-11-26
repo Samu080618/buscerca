@@ -34,6 +34,7 @@ class UIIniciarRecorrido : PantallaBase() {
         error = texto("", 14f, Colores.ROJO); c.agregar(error, 10)
         iniciar = boton("Iniciar recorrido") { pedirPermisoEIniciar() }
         c.agregar(iniciar, 10)
+        p.pestana("👤 Mi perfil", false) { irA(co.buscerca.app.presentacion.cuenta.UIPerfil::class.java) }
         p.pestana("Cerrar sesión", false) { cerrarSesion() }
         actualizarBoton()
         cargar()

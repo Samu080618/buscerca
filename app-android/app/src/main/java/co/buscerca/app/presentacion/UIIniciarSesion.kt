@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
 import co.buscerca.app.datos.Credenciales
+import co.buscerca.app.presentacion.cuenta.UIRecuperarContrasena
+import co.buscerca.app.presentacion.cuenta.UIRegistro
 import co.buscerca.app.presentacion.conductor.UIIniciarRecorrido
 import co.buscerca.app.presentacion.pasajero.UIBuscarRutas
 
@@ -33,6 +35,10 @@ class UIIniciarSesion : PantallaBase() {
             }
         }
         c.agregar(ingresar, 12)
+        c.agregar(texto("¿Olvidaste tu contraseña?", 15f, Colores.VERDE, true).apply {
+            gravity = Gravity.CENTER; setPadding(0, dp(8), 0, dp(8)); setOnClickListener { irA(UIRecuperarContrasena::class.java) }
+        }, 10)
+        c.agregar(botonBorde("Crear cuenta") { irA(UIRegistro::class.java) }, 6)
         val servidor = texto("Servidor: ${sesion.servidor}", 13f, Colores.GRIS).apply { gravity = Gravity.CENTER }
         servidor.setOnClickListener {
             val e = campo("http://192.168.0.10:8000/").apply { setText(sesion.servidor) }

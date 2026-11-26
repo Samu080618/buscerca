@@ -57,3 +57,18 @@ object ValidadorFavorito {
 
 /** Formato de la velocidad que ve el conductor (CP-0203-04). */
 fun formatoVelocidad(kmh: Double?): String = if (kmh == null) "— km/h" else "${Math.round(kmh)} km/h"
+
+/** Módulo 01: validaciones de registro, recuperación y perfil (las mismas reglas que la API). */
+object ValidadorCuenta {
+    private val CORREO = Regex("^[^@\\s]+@[^@\\s]+\\.[A-Za-z]{2,}$")
+    const val CLAVE_DEBIL = "La contraseña debe tener mínimo 8 caracteres, con letras y números"
+
+    fun correo(c: String): String? = if (CORREO.matches(c.trim())) null else "Escribe un correo válido"
+    fun contrasena(c: String): String? = if (c.length >= 8 && c.any { it.isLetter() } && c.any { it.isDigit() }) null else CLAVE_DEBIL
+    fun nombre(n: String): String? = if (n.trim().length in 3..80) null else "Escribe tu nombre completo (entre 3 y 80 caracteres)"
+    fun telefono(t: String): String? = if (t.isBlank() || Regex("\\d{7,10}").matches(t.trim())) null else "El teléfono debe tener entre 7 y 10 dígitos"
+    fun coinciden(a: String, b: String): String? = if (a == b) null else "Las contraseñas no coinciden"
+
+    fun registro(nombre: String, correo: String, clave: String, confirmacion: String, telefono: String) =
+        nombre(nombre) ?: correo(correo) ?: contrasena(clave) ?: coinciden(clave, confirmacion) ?: telefono(telefono)
+}

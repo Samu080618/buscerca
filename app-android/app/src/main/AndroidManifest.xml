@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Módulo 01: Autenticación y Perfiles -->
+        <activity android:name=".presentacion.cuenta.UIRegistro" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".presentacion.cuenta.UIRecuperarContrasena" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".presentacion.cuenta.UIPerfil" android:windowSoftInputMode="adjustResize" />
+
         <!-- Módulo 02: Panel del Conductor -->
         <activity android:name=".presentacion.conductor.UIIniciarRecorrido" />
         <activity android:name=".presentacion.conductor.UIRecorridoEnCurso" android:launchMode="singleTop" />

@@ -2,7 +2,7 @@
 -- Módulo 01 (usuario), Módulo 02 (Sprint 2) y Módulo 03 (Sprint 3)
 CREATE EXTENSION IF NOT EXISTS postgis;
 
-DROP TABLE IF EXISTS favorito, novedad, tipo_novedad, ubicacion, recorrido, estado_recorrido,
+DROP TABLE IF EXISTS recuperacion_contrasena, token_revocado, favorito, novedad, tipo_novedad, ubicacion, recorrido, estado_recorrido,
   ruta_paradero, paradero, vehiculo, ruta, usuario CASCADE;
 
 -- Módulo 01 (con foto_url agregada en el Sprint 3)

@@ -11,7 +11,15 @@ import retrofit2.http.Query
 
 /** Contrato de la API REST (sección Programación del documento). */
 interface ApiBusCerca {
+    // Módulo 01 — Autenticación y Perfiles
+    @POST("api/auth/registro") suspend fun registrar(@Body r: Registro): Mensaje
     @POST("api/auth/login") suspend fun login(@Body c: Credenciales): RespuestaLogin
+    @POST("api/auth/recuperar") suspend fun recuperar(@Body c: CorreoReq): Mensaje
+    @POST("api/auth/restablecer") suspend fun restablecer(@Body r: Restablecer): Mensaje
+    @POST("api/auth/logout") suspend fun logout(): Mensaje
+    @GET("api/perfil") suspend fun perfil(): Perfil
+    @PATCH("api/perfil") suspend fun editarPerfil(@Body d: DatosPerfil): Perfil
+    @POST("api/perfil/contrasena") suspend fun cambiarClave(@Body c: CambioClave): Mensaje
 
     // Módulo 02 — Conductor
     @GET("api/recorridos/opciones") suspend fun opciones(): Opciones

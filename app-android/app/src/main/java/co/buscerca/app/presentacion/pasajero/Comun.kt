@@ -12,7 +12,7 @@ import co.buscerca.app.presentacion.*
 fun PantallaBase.pestanasPasajero(p: Pantalla, activa: String) {
     p.pestana("🔍 Buscar", activa == "buscar") { if (activa != "buscar") irA(UIBuscarRutas::class.java, limpiar = true) }
     p.pestana("★ Favoritos", activa == "favoritos") { if (activa != "favoritos") irA(UIFavoritos::class.java) }
-    p.pestana("Salir", false) { cerrarSesion() }
+    p.pestana("👤 Perfil", activa == "perfil") { irA(co.buscerca.app.presentacion.cuenta.UIPerfil::class.java) }
 }
 
 /** Punto de referencia de la zona de servicio (a 350 m de Cogua centro). */

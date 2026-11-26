@@ -64,3 +64,15 @@ data class Favorito(
 }
 data class NuevoFavorito(val tipo: String, val id_ruta: Int?, val id_paradero: Int?, val alias: String?)
 data class Renombrar(val alias: String?)
+
+// ---------- Módulo 01: Autenticación y Perfiles ----------
+data class Registro(val nombre: String, val correo: String, val contrasena: String, val rol: String, val telefono: String?)
+data class Mensaje(val mensaje: String, val codigo_demo: String? = null)
+data class CorreoReq(val correo: String)
+data class Restablecer(val correo: String, val codigo: String, val nueva: String)
+data class Perfil(
+    val id_usuario: Int, val nombre: String, val correo: String, val rol: String,
+    val telefono: String?, val direccion: String?, val mensaje: String? = null,
+)
+data class DatosPerfil(val nombre: String, val telefono: String?, val direccion: String?)
+data class CambioClave(val actual: String, val nueva: String)
